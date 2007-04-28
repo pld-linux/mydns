@@ -1,11 +1,13 @@
+# TODO:
+# - fix configure patch to change source file instead of generated configure
 #
 # Conditional build:
 %bcond_with	mysql		# enable MySQL support
 %bcond_with	pgsql		# enable PostgreSQL support
 %bcond_with	ssl		# enable TLS/SSL support
 #
-Summary:	MyDNS is a free Database Driven Nameserver
-Summary(pl):	MyDNS to darmowy serwer nazw wykorzystuj±cy relacyjne bazy danych
+Summary:	MyDNS - a free Database Driven Nameserver
+Summary(pl.UTF-8):	MyDNS - darmowy serwer nazw wykorzystujÄ…cy relacyjne bazy danych
 Name:		mydns
 Version:	1.1.0
 Release:	1
@@ -18,18 +20,16 @@ Source3:	%{name}.sysconfig
 Patch0:		%{name}-configure.patch
 URL:		http://mydns.bboy.net/
 BuildRequires:	autoconf >= 2.59
-BuildRequires:	automake >= 1.96
-BuildRequires:	awk
-%{?with_mysql:BuildRequires:		mysql-devel}
+BuildRequires:	automake >= 1:1.9.6
+%{?with_mysql:BuildRequires:	mysql-devel}
 %{?with_ssl:BuildRequires:	openssl-devel >= 0.9.7i}
-%{?with_pgsql:BuildRequires:		postgresql-devel}
+%{?with_pgsql:BuildRequires:	postgresql-devel}
 BuildRequires:	rpmbuild(macros) >= 1.310
 BuildRequires:	texinfo
 BuildRequires:	zlib-devel
 Requires(post,preun):	/sbin/chkconfig
 Requires:	rc-scripts
 Provides:	nameserver
-Obsoletes:	mydns
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -37,9 +37,9 @@ MyDNS is a free DNS server implemented from scratch and is designed to
 serve records directly from an SQL database, either MySQL or
 PostgreSQL.
 
-%description -l pl
-MyDNS to darmowy serwer nazw zimplementowany od podstaw i
-zaprojektowany aby udostêpniaæ rekordy bezpo¶rednio z bazy SQL,
+%description -l pl.UTF-8
+MyDNS to darmowy serwer nazw zaimplementowany od podstaw i
+zaprojektowany aby udostÄ™pniaÄ‡ rekordy bezpoÅ›rednio z bazy SQL -
 obecnie MySQL lub PostgreSQL.
 
 %prep
@@ -47,7 +47,6 @@ obecnie MySQL lub PostgreSQL.
 %patch0 -p1
 
 %build
-
 %configure \
 	--disable-nls \
 	--with-confdir=%{_sysconfdir}/%{name} \
@@ -59,15 +58,16 @@ obecnie MySQL lub PostgreSQL.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_initrddir},%{_sysconfdir}/%{name},/etc/sysconfig}
+install -d $RPM_BUILD_ROOT{/etc/rc.d/init.d,%{_sysconfdir}/%{name},/etc/sysconfig}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-rm -rf $RPM_BUILD_ROOT%{_infodir}/dir*
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/%{name}.conf
-install %{SOURCE2} $RPM_BUILD_ROOT%{_initrddir}/%{name}
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/mydns
+
+rm -f $RPM_BUILD_ROOT%{_infodir}/dir*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -89,11 +89,11 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc ChangeLog AUTHORS BUGS README README.mysql INSTALL NEWS TODO QUICKSTART.*
-%attr(754,root,root) %{_initrddir}/%{name}
+%attr(754,root,root) /etc/rc.d/init.d/%{name}
 %dir %{_sysconfdir}/%{name}
 %attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/%{name}.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/mydns
 %attr(755,root,root) %{_sbindir}/*
 %attr(755,root,root) %{_bindir}/*
 %{_infodir}/*.info*
-%{_mandir}/man*/**
+%{_mandir}/man*/*
