@@ -1,0 +1,79 @@
+#!/bin/sh
+#
+# mydns        This starts and stops mydns.
+#
+# chkconfig: 345 52 50
+# description: A database-driven DNS server
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+# Source networking configuration
+. /etc/sysconfig/network
+
+# Check that networking is up.
+if is_yes "${NETWORKING}"; then
+	if [ ! -f /var/lock/subsys/network -a "$1" != stop -a "$1" != status ]; then
+		msg_network_down "MyDNS"
+		exit 1
+	fi
+else
+	exit 0
+fi
+
+MYDNSD=/usr/sbin/mydns
+LOCKF=/var/lock/subsys/mydns
+CONFIG=/etc/mydns/mydns.conf
+
+[ -f "$MYDNSD" ] || exit 0
+[ -f "$CONFIG" ] || exit 0
+
+RETVAL=0
+case "$1" in
+  start)
+	# Check if the service is already running?
+	if [ ! -f "$LOCKF" ]; then
+		msg_starting MYDNS
+		daemon "$MYDNSD" -b
+		RETVAL=$?
+		[ $RETVAL -eq 0 ] && touch "$LOCKF"
+	else
+		msg_already_running MYDNS
+	fi
+	;;
+  stop)
+	# Stop daemons.
+	if [ -f "$LOCKF" ]; then
+		msg_stopping MYDNS
+		killproc "$MYDNSD"
+		rm -f "$LOCKF" > /dev/null 2>&1
+	else
+		msg_not_running MYDNS
+	fi
+	;;
+  status)
+	status mydns
+	exit $?
+	;;
+  reload)
+	if [ -f "$LOCKF" ]; then
+		msg_reloading MYDNS
+		killproc "$MYDNSD" -HUP
+		RETVAL=$?
+	else
+		msg_not_running MYDNS >&2
+		exit 7
+	fi
+	;;
+  restart|force-reload)
+	$0 stop
+	sleep 3
+	$0 start
+	RETVAL=$?
+	;;
+  *)
+	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
+	exit 3
+esac
+
+exit $RETVAL

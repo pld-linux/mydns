@@ -1,0 +1,193 @@
+diff -durN -x '*~' mydns-1.1.0.orig/configure mydns-1.1.0/configure
+--- mydns-1.1.0.orig/configure	2006-01-18 16:08:37.000000000 -0600
++++ mydns-1.1.0/configure	2006-07-25 17:54:28.000000000 -0500
+@@ -15718,6 +15718,32 @@
+ fi
+ 
+ 				if test "$libmysqlclient_found" != yes; then
++					as_ac_File=`echo "ac_cv_file_$libmysqlclient_dir/libmysqlclient.so" | $as_tr_sh`
++echo "$as_me:$LINENO: checking for $libmysqlclient_dir/libmysqlclient.so" >&5
++echo $ECHO_N "checking for $libmysqlclient_dir/libmysqlclient.so... $ECHO_C" >&6
++if eval "test \"\${$as_ac_File+set}\" = set"; then
++  echo $ECHO_N "(cached) $ECHO_C" >&6
++else
++  test "$cross_compiling" = yes &&
++  { { echo "$as_me:$LINENO: error: cannot check for file existence when cross compiling" >&5
++echo "$as_me: error: cannot check for file existence when cross compiling" >&2;}
++   { (exit 1); exit 1; }; }
++if test -r "$libmysqlclient_dir/libmysqlclient.so"; then
++  eval "$as_ac_File=yes"
++else
++  eval "$as_ac_File=no"
++fi
++fi
++echo "$as_me:$LINENO: result: `eval echo '${'$as_ac_File'}'`" >&5
++echo "${ECHO_T}`eval echo '${'$as_ac_File'}'`" >&6
++if test `eval echo '${'$as_ac_File'}'` = yes; then
++  libmysqlclient_found=yes
++else
++  libmysqlclient_found=no
++fi
++				
++				fi
++				if test "$libmysqlclient_found" != yes; then
+ 					as_ac_File=`echo "ac_cv_file_$libmysqlclient_dir/libmysqlclient.so.10" | $as_tr_sh`
+ echo "$as_me:$LINENO: checking for $libmysqlclient_dir/libmysqlclient.so.10" >&5
+ echo $ECHO_N "checking for $libmysqlclient_dir/libmysqlclient.so.10... $ECHO_C" >&6
+@@ -15922,8 +15948,8 @@
+ " >&2;}
+    { (exit 1); exit 1; }; }
+      				fi
+-					LIBMYSQLCLIENT="-L$libmysqlclient_dir -lmysqlclient"
+-					#LIBMYSQLCLIENT="$libmysqlclient_dir/libmysqlclient.a"
++					#LIBMYSQLCLIENT="-L$libmysqlclient_dir -lmysqlclient"
++					LIBMYSQLCLIENT="$libmysqlclient_dir/libmysqlclient.so"
+ 					libmysqlclient_found=yes
+ 				fi
+ 			fi
+@@ -16017,6 +16043,32 @@
+ fi
+ 
+ 				if test "$libmysqlclient_found" != yes; then
++					as_ac_File=`echo "ac_cv_file_$libmysqlclient_dir/libmysqlclient.so" | $as_tr_sh`
++echo "$as_me:$LINENO: checking for $libmysqlclient_dir/libmysqlclient.so" >&5
++echo $ECHO_N "checking for $libmysqlclient_dir/libmysqlclient.so... $ECHO_C" >&6
++if eval "test \"\${$as_ac_File+set}\" = set"; then
++  echo $ECHO_N "(cached) $ECHO_C" >&6
++else
++  test "$cross_compiling" = yes &&
++  { { echo "$as_me:$LINENO: error: cannot check for file existence when cross compiling" >&5
++echo "$as_me: error: cannot check for file existence when cross compiling" >&2;}
++   { (exit 1); exit 1; }; }
++if test -r "$libmysqlclient_dir/libmysqlclient.so"; then
++  eval "$as_ac_File=yes"
++else
++  eval "$as_ac_File=no"
++fi
++fi
++echo "$as_me:$LINENO: result: `eval echo '${'$as_ac_File'}'`" >&5
++echo "${ECHO_T}`eval echo '${'$as_ac_File'}'`" >&6
++if test `eval echo '${'$as_ac_File'}'` = yes; then
++  libmysqlclient_found=yes
++else
++  libmysqlclient_found=no
++fi
++				
++				fi
++				if test "$libmysqlclient_found" != yes; then
+ 					as_ac_File=`echo "ac_cv_file_$libmysqlclient_dir/libmysqlclient.so.10" | $as_tr_sh`
+ echo "$as_me:$LINENO: checking for $libmysqlclient_dir/libmysqlclient.so.10" >&5
+ echo $ECHO_N "checking for $libmysqlclient_dir/libmysqlclient.so.10... $ECHO_C" >&6
+@@ -16221,8 +16273,8 @@
+ " >&2;}
+    { (exit 1); exit 1; }; }
+      				fi
+-					LIBMYSQLCLIENT="-L$libmysqlclient_dir -lmysqlclient"
+-					#LIBMYSQLCLIENT="$libmysqlclient_dir/libmysqlclient.a"
++					#LIBMYSQLCLIENT="-L$libmysqlclient_dir -lmysqlclient"
++					LIBMYSQLCLIENT="$libmysqlclient_dir/libmysqlclient.so"
+ 					libmysqlclient_found=yes
+ 				fi
+ 			fi
+@@ -16308,9 +16360,9 @@
+ 		do
+ 			if test "$ac_mydns_lib_found" != yes
+ 			then
+-				as_ac_File=`echo "ac_cv_file_$dir/libpq.a" | $as_tr_sh`
+-echo "$as_me:$LINENO: checking for $dir/libpq.a" >&5
+-echo $ECHO_N "checking for $dir/libpq.a... $ECHO_C" >&6
++				as_ac_File=`echo "ac_cv_file_$dir/libpq.so" | $as_tr_sh`
++echo "$as_me:$LINENO: checking for $dir/libpq.so" >&5
++echo $ECHO_N "checking for $dir/libpq.so... $ECHO_C" >&6
+ if eval "test \"\${$as_ac_File+set}\" = set"; then
+   echo $ECHO_N "(cached) $ECHO_C" >&6
+ else
+@@ -16318,7 +16370,7 @@
+   { { echo "$as_me:$LINENO: error: cannot check for file existence when cross compiling" >&5
+ echo "$as_me: error: cannot check for file existence when cross compiling" >&2;}
+    { (exit 1); exit 1; }; }
+-if test -r "$dir/libpq.a"; then
++if test -r "$dir/libpq.so"; then
+   eval "$as_ac_File=yes"
+ else
+   eval "$as_ac_File=no"
+@@ -16385,7 +16437,7 @@
+ 
+ 					echo "$as_me:$LINENO: checking for PostgreSQL version number" >&5
+ echo $ECHO_N "checking for PostgreSQL version number... $ECHO_C" >&6
+-					PG_VERSION=`grep "PG_VERSION " /usr/local/pgsql/include/pg_config.h | cut -f3 -d' '`
++					PG_VERSION=`grep "PG_VERSION " /usr/include/pg_config.h | cut -f3 -d' '`
+ 					echo "$as_me:$LINENO: result: $PG_VERSION" >&5
+ echo "${ECHO_T}$PG_VERSION" >&6
+ 
+@@ -16446,9 +16498,9 @@
+ 		do
+ 			if test "$ac_mydns_lib_found" != yes
+ 			then
+-				as_ac_File=`echo "ac_cv_file_$dir/libpq.a" | $as_tr_sh`
+-echo "$as_me:$LINENO: checking for $dir/libpq.a" >&5
+-echo $ECHO_N "checking for $dir/libpq.a... $ECHO_C" >&6
++				as_ac_File=`echo "ac_cv_file_$dir/libpq.so" | $as_tr_sh`
++echo "$as_me:$LINENO: checking for $dir/libpq.so" >&5
++echo $ECHO_N "checking for $dir/libpq.so... $ECHO_C" >&6
+ if eval "test \"\${$as_ac_File+set}\" = set"; then
+   echo $ECHO_N "(cached) $ECHO_C" >&6
+ else
+@@ -16456,7 +16508,7 @@
+   { { echo "$as_me:$LINENO: error: cannot check for file existence when cross compiling" >&5
+ echo "$as_me: error: cannot check for file existence when cross compiling" >&2;}
+    { (exit 1); exit 1; }; }
+-if test -r "$dir/libpq.a"; then
++if test -r "$dir/libpq.so"; then
+   eval "$as_ac_File=yes"
+ else
+   eval "$as_ac_File=no"
+@@ -16523,7 +16575,7 @@
+ 
+ 					echo "$as_me:$LINENO: checking for PostgreSQL version number" >&5
+ echo $ECHO_N "checking for PostgreSQL version number... $ECHO_C" >&6
+-					PG_VERSION=`grep "PG_VERSION " /usr/local/pgsql/include/pg_config.h | cut -f3 -d' '`
++					PG_VERSION=`grep "PG_VERSION " /usr/include/pg_config.h | cut -f3 -d' '`
+ 					echo "$as_me:$LINENO: result: $PG_VERSION" >&5
+ echo "${ECHO_T}$PG_VERSION" >&6
+ 
+@@ -16594,9 +16646,9 @@
+ 		do
+ 			if test "$ac_ssl_lib_found" != yes
+ 			then
+-				as_ac_File=`echo "ac_cv_file_$dir/libssl.a" | $as_tr_sh`
+-echo "$as_me:$LINENO: checking for $dir/libssl.a" >&5
+-echo $ECHO_N "checking for $dir/libssl.a... $ECHO_C" >&6
++				as_ac_File=`echo "ac_cv_file_$dir/libssl.so" | $as_tr_sh`
++echo "$as_me:$LINENO: checking for $dir/libssl.so" >&5
++echo $ECHO_N "checking for $dir/libssl.so... $ECHO_C" >&6
+ if eval "test \"\${$as_ac_File+set}\" = set"; then
+   echo $ECHO_N "(cached) $ECHO_C" >&6
+ else
+@@ -16604,7 +16656,7 @@
+   { { echo "$as_me:$LINENO: error: cannot check for file existence when cross compiling" >&5
+ echo "$as_me: error: cannot check for file existence when cross compiling" >&2;}
+    { (exit 1); exit 1; }; }
+-if test -r "$dir/libssl.a"; then
++if test -r "$dir/libssl.so"; then
+   eval "$as_ac_File=yes"
+ else
+   eval "$as_ac_File=no"
+@@ -16629,7 +16681,7 @@
+ 			{ { echo "$as_me:$LINENO: error:
+ 
+   ###
+-  ###  OpenSSL libraries (libssl.a/libcrypto.a) not found!
++  ###  OpenSSL libraries (libssl.so/libcrypto.a) not found!
+   ###
+   ###  If your OpenSSL libraries are in an unusual location,
+   ###  specify the directory where they are located with:
+@@ -16647,7 +16699,7 @@
+ echo "$as_me: error:
+ 
+   ###
+-  ###  OpenSSL libraries (libssl.a/libcrypto.a) not found!
++  ###  OpenSSL libraries (libssl.so/libcrypto.a) not found!
+   ###
+   ###  If your OpenSSL libraries are in an unusual location,
+   ###  specify the directory where they are located with:
